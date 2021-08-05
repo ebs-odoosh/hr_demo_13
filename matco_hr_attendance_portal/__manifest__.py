@@ -9,7 +9,7 @@
     'company': 'Techultra Solutions Pvt. Ltd.',
     'maintainer': '',
     'website': "",
-    'depends': ['website', 'project','hr_timesheet','hr'],
+    'depends': ['website', 'project','hr_timesheet','hr','hr_attendance'],
     'data': [
         'data/attendance_menu.xml',
         'views/attendance_webpage.xml',
