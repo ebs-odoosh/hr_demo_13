@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <record id="view_batch_allocation_form" model="ir.ui.view">
+        <field name="name">Batch Allocation</field>
+        <field name="model">batch.allocation</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="template_id" class="text-break flex-wrap" widget="radio" options="{'horizontal': true}"/>
+                        <field name="project_id"/>
+                        <field name="role_id"/>
+                        <field name="start_datetime" string="Start date"/>
+                        <field name="end_datetime" string="End date"/>
+                    </group>
+                    <group>
+                        <field name="allocated_project"/>
+                    </group>
+                </group>
+                <group colspan="4" >
+                    <separator string="Employees" colspan="4"/>
+                    <newline/>
+                    <field name="employee_ids" nolabel="1"/>
+                </group>
+                <footer>
+                    <button name="create_shift" string="Create Shift" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+    <act_window name="Batch Allocation" id="action_batch_allocation"
+        res_model="batch.allocation"
+        view_mode="form" target="new"/>
+    <menuitem name="Batch Allocation" id="batch_allocation_menu" parent="planning.planning_menu_my_planning"  action="action_batch_allocation" sequence="20"/>
+</odoo>

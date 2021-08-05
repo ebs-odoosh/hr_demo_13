@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record id="project_reallocation_tree_view" model="ir.ui.view">
+            <field name="name">project.reallocation.tree.view</field>
+            <field name="model">project.reallocation</field>
+            <field name="arch" type="xml">
+                <tree string="Project Reallocation">
+                    <field name="employee_id"/>
+                    <field name="allocated_project_id" readonly="1" force_save="1"/>
+                    <field name="reallocated_project_id"/>
+                    <field name="currency_id" invisible="1"/>
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                    <field name="overtime_amount" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="project_reallocation_form_view" model="ir.ui.view">
+            <field name="name">project.reallocation.form.view</field>
+            <field name="model">project.reallocation</field>
+            <field name="arch" type="xml">
+                <form string="Project Reallocation">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="employee_id" required="1"/>
+                                <field name="allocated_project_id" readonly="1"/>
+                                <field name="reallocated_project_id" domain="[('allow_forecast','=',True)]" required="1"/>
+                                <field name="planning_slot_id"/>
+                                <field name="currency_id" invisible="1"/>
+                                <field name="overtime_amount" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                <field name="date_from" required="1"/>
+                                <field name="date_to" required="1"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+    <record id="action_project_reallocation" model="ir.actions.act_window">
+        <field name="name">Project Reallocation</field>
+        <field name="res_model">project.reallocation</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem name="Project Reallocation" id="project_reallocation_menu" parent="project.menu_main_pm" sequence="2"/>
+    <menuitem name="Project Reallocation" id="project_reallocation_sub_menu" parent="matco_project_planning_extended.project_reallocation_menu"  action="action_project_reallocation" sequence="1"/>
+</odoo>
