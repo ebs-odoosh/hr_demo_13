@@ -1,0 +1,219 @@
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<odoo>
+    <!-- webpage record -->
+    <template id="attendance_web_page" name="Attendance Form">
+        <t t-call="website.layout">
+            <div id="wrap" class="oe_structure oe_empty">
+                <section>
+                    <div class="container mt-4 mb-5 pl-5">
+                        <form name="search" action="/attendance/information" method="post">
+                            <div class="col-xl-10">
+                                <input type="hidden" name="csrf_token"
+                                       t-att-value="request.csrf_token()"/>
+                                <div class="form-group col-12">
+                                    <div class="row ">
+                                        <label class=" col-form-label col-sm-4" for="project_label">Department *</label>
+                                        <div class="col-sm-8">
+                                            <select id="project_ids" name="project" class="form-control" required="1">
+                                                <option value="none" selected="0" disabled="0">Select Department</option>
+                                                <t t-foreach="project_ids" t-as="p">
+                                                    <option t-att-value="p.id"
+                                                            t-att-selected="p.id == (project and project.id or -1)">
+                                                        <t t-esc="p.name"/>
+                                                    </option>
+                                                </t>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group col-12">
+                                    <div class="row ">
+                                        <label class=" col-form-label col-sm-4" for="employee_id">Employee *</label>
+                                        <div class="col-sm-8">
+                                            <select id="employee_id" name="employee" class="form-control"
+                                                    required="1">
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group col-12">
+                                    <div class="row">
+                                        <label name="date_start" class=" col-form-label col-sm-4" string="From Date">
+                                            Check In Time*
+                                        </label>
+                                        <div class="input-group  col-sm-8 date_from_end" id="datetimepicker"
+                                             data-target-input="nearest" t-attf-data-target="#datetimepicker"
+                                             data-toggle="datetimepicker">
+                                            <input type="text" class="form-control" name="start_date"
+                                                   id="date_start" required="1"/>
+                                            <div class="input-group-append">
+                                                <div class="input-group-text">
+                                                    <i class="fa fa-calendar "></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group col-12">
+                                    <div class="row">
+                                        <label class="col-form-label col-sm-4" name="date_end"
+                                               string="End Date">Check Out Time *
+                                        </label>
+                                        <div class="input-group  col-sm-8 date_from_end" id="datetimepicker_end"
+                                             data-target-input="nearest" t-attf-data-target="#datetimepicker_end"
+                                             data-toggle="datetimepicker"   >
+                                            <input type="text" class="form-control " id="date_end"
+                                                   name="date_end" required="1"/>
+                                            <div class="input-group-append">
+                                                <div class="input-group-text">
+                                                    <i class="fa fa-calendar "></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group col-12">
+                                    <div class="row">
+                                        <label class=" col-form-label col-sm-4" name="days_label"
+                                               string="Days">Days *
+                                        </label>
+                                        <div class="input-group col-sm-8 bg_color">
+                                            <input t-att-value="days " id="days" name="days"
+                                                   class="form-control " type="text"
+                                                   required="1"/>
+                                            <div class="input-group-append">
+                                                <a type="button" class="btn btn-secondary" id="calculate_days">
+                                                    Calculate Days
+<!--                                                <i class="fa fa-calculator"/>-->
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-12">
+                                    <div class="row ">
+                                        <label class=" col-form-label col-sm-4" for="project_task">Existing Task
+                                        </label>
+                                        <div class="col-sm-8">
+                                            <select id="project_task" name="project_task" class="form-control"
+                                                    required="1"></select>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group col-12">
+                                    <div class="row">
+                                        <label class=" col-form-label col-sm-4" name="new_task_label"
+                                               string="Days">New Task
+                                        </label>
+                                        <div class="col-sm-8 bg_color">
+                                            <input t-att-value="new_task " id="new_task" name="new_task"
+                                                   class="form-control " type="text"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-12">
+                                    <div class="row ">
+                                        <label class=" col-form-label col-sm-4" for="attendance">Attendance *</label>
+                                        <div class="col-sm-8">
+                                            <select id="present_absent" name="present_absent" class="form-control"
+                                                    required="1">
+                                                <option selected="0" disabled="1">Select Attendance</option>
+                                                <option value="late">Late</option>
+                                                <option value="absent">Absent</option>
+                                                <option value="attended">Attended</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group col-12">
+                                    <div class="row">
+                                        <label class=" col-form-label col-sm-4" name="worked_hour">
+<!--                                               string="End Date">Worked Hours *-->
+                                        </label>
+                                        <div class="col-sm-8 bg_color">
+                                            <input t-att-value="from_to_time " id="from_to_time" name="from_to_time"
+                                                   class="form-control bg_color" type="hidden" readonly="1"
+                                                   required="1"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group col-12">
+                                    <div class="row">
+                                        <label class="col-sm-4"></label>
+                                        <div class=" col-sm-8">
+                                            <button type="submit" class="btn btn-primary btn-lg" id="button_submit"
+                                                    value="Submit">SUBMIT
+                                            </button>
+                                            <button type="reset" class="btn btn-primary btn-lg" value="Reset"
+                                                    id="button_cancel">Cancel
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </form>
+                    </div>
+                </section>
+            </div>
+        </t>
+    </template>
+
+    <template id="information_page" name="Information page">
+        <t t-call="website.layout">
+            <div id="wrap" class="oe_structure oe_empty">
+                <section>
+                    <div class="container mt-5 mb-5">
+                        <div style="color:green !important;">
+                            <center>
+                                <h2>Attendance has been successfully entered.</h2>
+                            </center>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </t>
+    </template>
+
+    <template id="excess_page" name="Excess page">
+        <t t-call="website.layout">
+            <div id="wrap" class="oe_structure oe_empty">
+                <section>
+                    <div class="container mt-5 mb-5">
+                        <div style="color:red !important;">
+                            <center>
+                                <h2>You don't have access to this page.</h2>
+                            </center>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </t>
+    </template>
+
+
+    <template id="template_attendance_form" inherit_id="website.assets_frontend">
+        <xpath expr="link[last()]" position="after">
+            <link rel="stylesheet" type="text/scss" href="/matco_hr_attendance_portal/static/src/css/form.css"/>
+            <script type="text/javascript" src="/matco_hr_attendance_portal/static/src/js/address_form.js"></script>
+        </xpath>
+    </template>
+
+</odoo>

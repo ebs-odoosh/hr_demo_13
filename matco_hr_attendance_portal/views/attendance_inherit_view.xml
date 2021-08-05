@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="attendance_tree_inherit" model="ir.ui.view">
+        <field name="name">hr.attendance.inherit.tree</field>
+        <field name="model">hr.attendance</field>
+        <field name="inherit_id" ref="hr_attendance.view_attendance_tree"/>
+        <field name="arch" type="xml">
+            <field name="worked_hours" position="after">
+                <field name="project_id"/>
+                <field name="present_absent" optional="hide"/>
+                <field name="days" optional="hide"/>
+                <field name="project_manager_id" optional="hide"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="project_timesheet_line_tree_inherit" model="ir.ui.view">
+        <field name="name">project.timesheet.inherit.tree</field>
+        <field name="model">account.analytic.line</field>
+        <field name="inherit_id" ref="hr_timesheet.hr_timesheet_line_tree"/>
+        <field name="arch" type="xml">
+            <field name="unit_amount" position="after">
+                <!--                <field name="project_id" optional="hide"/>-->
+                <field name="present_absent" optional="hide"/>
+                <field name="days" optional="hide"/>
+                <field name="project_manager_id" optional="hide"/>
+            </field>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_project_task_form_inherited">
+        <field name="name">hr.project.task.form.inherited</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="hr_timesheet.view_task_form2_inherited"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='timesheet_ids']//field[@name='unit_amount']" position="after">
+                <field name="present_absent" optional="hide"/>
+                <field name="days" optional="hide"/>
+                <field name="project_manager_id" optional="hide"/>
+            </xpath>
+        </field>
+    </record>
+
+
+    <record id="hr_attendance_view_filter_inherit" model="ir.ui.view">
+        <field name="name">hr_attendance_view_filter_inherit</field>
+        <field name="model">hr.attendance</field>
+        <field name="inherit_id" ref="hr_attendance.hr_attendance_view_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='employee_id']" position="after">
+                <field name="project_id"/>
+            </xpath>
+            <xpath expr="//filter[@name='employee']" position="after">
+                <filter name="department" string="Department" context="{'group_by' : 'project_id'}"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

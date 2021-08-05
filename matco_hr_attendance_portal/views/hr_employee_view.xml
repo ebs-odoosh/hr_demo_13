@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_hr_employee_form_inherit" model="ir.ui.view">
+        <field name="name">hr.employee.form.changes.inherit</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='hr_settings']/group" position="inside">
+                <group name="project" string="Department">
+                    <field name="project_id"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_hr_employee_tree_inherit" model="ir.ui.view">
+        <field name="name">hr.employee.tree.changes.inherit</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_tree"/>
+        <field name="arch" type="xml">
+            <field name="job_id" position="after">
+                <field name="project_id"/>
+            </field>
+            <xpath expr="//field[@name='department_id']" position="attributes">
+                <attribute name="optional">hide</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_employee_filter_inherit" model="ir.ui.view">
+        <field name="name">hr.employee.search.inherit</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search//group//filter[@name='group_job']" position="after">
+                <filter name="group_by_project" string="Department" domain="[]" context="{'group_by': 'project_id'}"/>
+            </xpath>
+        </field>
+    </record>
+<!--    <record id="hr.act_employee_from_department" model="ir.actions.act_window">-->
+<!--        <field name="name">Employees</field>-->
+<!--        <field name="res_model">hr.employee</field>-->
+<!--        <field name="view_mode">kanban,form,tree</field>-->
+<!--        <field name="context">{-->
+<!--            "searchpanel_default_department_id": active_id,-->
+<!--            "default_department_id": active_id,-->
+<!--            'search_default_group_by_project': 1}-->
+<!--        </field>-->
+<!--        <field name="search_view_id" ref="hr.view_employee_filter"/>-->
+<!--    </record>-->
+
+<!--    <record id="hr.open_view_employee_list_my" model="ir.actions.act_window">-->
+<!--        <field name="name">Employees</field>-->
+<!--        <field name="res_model">hr.employee</field>-->
+<!--        <field name="view_mode">kanban,tree,form,activity</field>-->
+<!--        <field name="context">{'search_default_group_by_project': 1}</field>-->
+<!--        <field name="search_view_id" ref="hr.view_employee_filter"/>-->
+<!--    </record>-->
+</odoo>
