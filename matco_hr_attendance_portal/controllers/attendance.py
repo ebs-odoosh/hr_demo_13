@@ -101,15 +101,15 @@ class Attendance(http.Controller):
                 })
 
                 task = task_id.id
-            request.env['account.analytic.line'].sudo().create({
-                'project_manager_id': request.env.user.id,
-                'project_id': int(kwargs.get('project')),
-                'task_id': task,
-                'employee_id': int(kwargs.get('employee')),
-                'present_absent': kwargs.get('present_absent'),
-                'days': kwargs.get('days'),
-                'unit_amount': kwargs.get('from_to_time'),
-                # 'check_in': datetime.strptime(kwargs.get('start_date'), ""%m/%d/%Y %I:%M %p"),
-                # 'check_out': datetime.strptime(kwargs.get('date_end'), "%m/%d/%Y %I:%M %p"),
-            })
+            # request.env['account.analytic.line'].sudo().create({
+            #     'project_manager_id': request.env.user.id,
+            #     'project_id': int(kwargs.get('project')),
+            #     'task_id': task,
+            #     'employee_id': int(kwargs.get('employee')),
+            #     'present_absent': kwargs.get('present_absent'),
+            #     'days': kwargs.get('days'),
+            #     'unit_amount': kwargs.get('from_to_time'),
+            #     # 'check_in': datetime.strptime(kwargs.get('start_date'), ""%m/%d/%Y %I:%M %p"),
+            #     # 'check_out': datetime.strptime(kwargs.get('date_end'), "%m/%d/%Y %I:%M %p"),
+            # })
         return http.request.render('matco_hr_attendance_portal.information_page', {})
