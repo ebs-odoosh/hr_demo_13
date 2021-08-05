@@ -35,6 +35,9 @@
             <xpath expr="//search//group//filter[@name='group_job']" position="after">
                 <filter name="group_by_project" string="Department" domain="[]" context="{'group_by': 'project_id'}"/>
             </xpath>
+             <xpath expr="//search//group//filter[@name='group_department']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
         </field>
     </record>
 <!--    <record id="hr.act_employee_from_department" model="ir.actions.act_window">-->

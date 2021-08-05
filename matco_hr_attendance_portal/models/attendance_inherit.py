@@ -14,7 +14,7 @@ class HrAttendanceInherit(models.Model):
 
     # call method from rpc
     def get_number_of_days(self):
-        print('333333333333333333333333333333333333',self)
+        pass
 
 
 
